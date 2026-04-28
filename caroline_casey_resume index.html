@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caroline Casey — Enterprise Sales</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --cream: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8d9a0;
+    --slate: #4a4a4a;
+    --mist: #e8e2d8;
+    --white: #fefcf8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    z-index: 100;
+    background: rgba(245, 240, 232, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--mist);
+  }
+
+  nav .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  nav .nav-links a {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--slate);
+    margin-left: 2.5rem;
+    transition: color 0.3s;
+    font-weight: 500;
+  }
+  nav .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%; right: -10%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translate(0,0); }
+    50% { transform: translate(-30px,20px); }
+  }
+
+  .hero-inner {
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .hero-text { flex: 1; }
+
+  .hero-photo-wrap {
+    flex-shrink: 0;
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero-photo-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border: 1px dashed var(--gold);
+    border-radius: 50%;
+    animation: spinSlow 25s linear infinite;
+    opacity: 0.4;
+  }
+
+  @keyframes spinSlow { to { transform: rotate(360deg); } }
+
+  .hero-photo {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    border: 4px solid var(--white);
+  }
+
+  .hero-tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero h1 .italic {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--slate);
+    max-width: 480px;
+    line-height: 1.75;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3.5rem;
+    margin-top: 3.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .hero-stat .number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+  }
+
+  .hero-stat .label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-top: 0.2rem;
+    font-weight: 500;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+  }
+
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: var(--gold);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { transform: scaleX(1); }
+    50% { transform: scaleX(0.5); }
+  }
+
+  .scroll-indicator span {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--slate);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 3rem; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid var(--mist);
+    padding-bottom: 1.5rem;
+  }
+
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    color: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience-section {
+    background: var(--white);
+    border-top: 1px solid var(--mist);
+  }
+
+  .role-card {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 3rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--mist);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+  }
+
+  .role-card.visible { opacity: 1; transform: translateY(0); }
+
+  .role-meta {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+
+  .role-company {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .role-title-text {
+    font-size: 0.82rem;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .role-date {
+    font-size: 0.72rem;
+    color: var(--slate);
+    letter-spacing: 0.06em;
+  }
+
+  .role-location {
+    font-size: 0.7rem;
+    color: var(--slate);
+    margin-top: 0.15rem;
+    font-style: italic;
+  }
+
+  .role-content h4 {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+    margin-top: 0;
+    font-weight: 600;
+  }
+
+  .role-content p,
+  .role-content li {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--slate);
+    font-weight: 300;
+  }
+
+  .role-content ul {
+    list-style: none;
+    margin-bottom: 2rem;
+  }
+
+  .role-content ul li {
+    padding-left: 1.1rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+  }
+
+  .role-content ul li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.6rem;
+    width: 5px; height: 5px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .metrics-bar {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    padding: 1.2rem 0;
+    border-top: 1px solid var(--mist);
+    border-bottom: 1px solid var(--mist);
+  }
+
+  .metric { flex: 1; min-width: 130px; }
+
+  .metric .value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--ink);
+  }
+
+  .metric .desc {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-top: 0.15rem;
+    font-weight: 500;
+  }
+
+  /* ── PROMOTIONS TIMELINE ── */
+  .promotions { margin-top: 1.5rem; }
+
+  .promo-item {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--gold-light);
+  }
+
+  .promo-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.82rem;
+    color: var(--gold);
+    min-width: 75px;
+    font-weight: 700;
+  }
+
+  .promo-detail {
+    font-size: 0.82rem;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+
+  .promo-detail strong { color: var(--ink); font-weight: 600; }
+
+  /* ── EDUCATION ── */
+  .education-section {
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .education-section::before {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .education-section .section-header {
+    border-bottom-color: rgba(201,168,76,0.25);
+  }
+
+  .education-section .section-title { color: var(--cream); }
+
+  .edu-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .edu-school {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+
+  .edu-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .edu-details {
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.7;
+  }
+
+  .edu-gpa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.45rem 1.1rem;
+    border: 1px solid var(--gold);
+    border-radius: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .edu-gpa span {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    text-align: center;
+    padding: 8rem 3rem;
+    position: relative;
+  }
+
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--mist), transparent);
+  }
+
+  .contact-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-heading .italic {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.3s;
+  }
+
+  .contact-link:hover { color: var(--gold); }
+
+  .contact-link .cl-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--slate);
+  }
+
+  .contact-link .cl-value {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--mist);
+    font-size: 0.65rem;
+    color: var(--slate);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav .nav-links a { margin-left: 1.5rem; font-size: 0.65rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .hero-inner { flex-direction: column-reverse; gap: 2.5rem; }
+    .hero-photo { width: 180px; height: 180px; }
+    .hero h1 { font-size: 3rem; }
+    .hero-stats { gap: 2rem; flex-wrap: wrap; }
+    .hero-stat .number { font-size: 2rem; }
+    section { padding: 4rem 1.5rem; }
+    .role-card { grid-template-columns: 1fr; gap: 1.5rem; }
+    .role-meta { position: static; }
+    .metrics-bar { gap: 1.2rem; }
+    .edu-content { grid-template-columns: 1fr; }
+    .scroll-indicator { display: none; }
+    .contact-links { gap: 2rem; }
+    .promo-item { flex-direction: column; gap: 0.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Caroline Casey</div>
+  <div class="nav-links">
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-tag">Enterprise Sales Leader</div>
+      <h1>Caroline<br><span class="italic">Casey</span></h1>
+      <p class="hero-subtitle">
+        Building territories from zero and closing complex, multi-million dollar deals across the enterprise software landscape — from pre-IPO to public.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="number">$4.7M+</div>
+          <div class="label">Revenue Closed</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">9</div>
+          <div class="label">Years in Tech Sales</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">30+</div>
+          <div class="label">Net New Logos</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <img class="hero-photo" src="data:image/png;base64,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" alt="Caroline Casey">
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>Scroll to explore</span>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section class="experience-section" id="experience">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Experience</h2>
+  </div>
+
+  <!-- AUGMENT CODE -->
+  <div class="role-card">
+    <div class="role-meta">
+      <div class="role-company">Augment Code</div>
+      <div class="role-title-text">Enterprise GTM, East</div>
+      <div class="role-date">November 2025 — Present</div>
+      <div class="role-location">Remote</div>
+    </div>
+    <div class="role-content">
+      <div class="metrics-bar">
+        <div class="metric">
+          <div class="value">109%</div>
+          <div class="desc">Q1 FY27 Quota</div>
+        </div>
+        <div class="metric">
+          <div class="value">#1</div>
+          <div class="desc">Rep on East Team</div>
+        </div>
+        <div class="metric">
+          <div class="value">$60K</div>
+          <div class="desc">Expansion at Wiz</div>
+        </div>
+      </div>
+      <h4>What I Do</h4>
+      <ul>
+        <li>Joined Series B startup (Sutter Hill, Index Ventures) to expand Augment's East Coast footprint</li>
+        <li>Designed tiered account penetration strategy for 30 key accounts, driving significant pipeline coverage within 6 months</li>
+        <li>Drive customer on-sites and POVs proving Augment's ROI with key stakeholders</li>
+        <li>Navigated a mid-cycle pricing model transition from per-seat to credit-based consumption, adapting deal structures to maintain momentum</li>
+        <li>Act as a trusted advisor on the evolving AI landscape across the SDLC</li>
+      </ul>
+      <h4>Key Wins</h4>
+      <ul>
+        <li>Over-exceeded ramp quota Q4 FY26 — 2 outbound CAM meetings + $60K expansion at Wiz</li>
+        <li>Led customer on-sites at Red Hat and Chewy, educating teams on AI for the SDLC</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CONFLUENT -->
+  <div class="role-card">
+    <div class="role-meta">
+      <div class="role-company">Confluent</div>
+      <div class="role-title-text">Enterprise Account Executive</div>
+      <div class="role-date">March 2021 — October 2025</div>
+      <div class="role-location">Boston, MA (Remote)</div>
+    </div>
+    <div class="role-content">
+      <div class="metrics-bar">
+        <div class="metric">
+          <div class="value">$4.7M+</div>
+          <div class="desc">Total Revenue</div>
+        </div>
+        <div class="metric">
+          <div class="value">18+</div>
+          <div class="desc">Net New Logos</div>
+        </div>
+        <div class="metric">
+          <div class="value">134%</div>
+          <div class="desc">Net Retention</div>
+        </div>
+      </div>
+
+      <h4>Progression</h4>
+      <div class="promotions">
+        <div class="promo-item">
+          <div class="promo-year">2024–25</div>
+          <div class="promo-detail"><strong>Enterprise AE, Digital Native</strong> — Promoted to break into top strategic targets ($1B+ revenue). Closed $1.66M including Wayfair as a net new Cloud customer through 18+ month cycle, unlocking $15M+ consumption growth potential.</div>
+        </div>
+        <div class="promo-item">
+          <div class="promo-year">2023</div>
+          <div class="promo-detail"><strong>Mid-Market AE, Digital Native</strong> — #1 rep on Northeast team. Closed $1.73M net new revenue, 6 net new logos, and the top customer expansion deal in Q3 ($937K TCV).</div>
+        </div>
+        <div class="promo-item">
+          <div class="promo-year">2021–22</div>
+          <div class="promo-detail"><strong>Startups & Emerging Businesses AE</strong> — Joined pre-IPO (~$250M ARR). First AE hired to build New England territory from scratch. Closed 12 net new logos for $1.33M. Top 10% of Commercial Sales. Largest S&EB deal in Q1 ($522K TCV), #1 S&EB rep in Northeast.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORACLE -->
+  <div class="role-card">
+    <div class="role-meta">
+      <div class="role-company">Oracle</div>
+      <div class="role-title-text">Field Account Manager</div>
+      <div class="role-date">August 2017 — March 2021</div>
+      <div class="role-location">Burlington, MA</div>
+    </div>
+    <div class="role-content">
+      <div class="metrics-bar">
+        <div class="metric">
+          <div class="value">164%</div>
+          <div class="desc">FY21 Midyear Quota</div>
+        </div>
+        <div class="metric">
+          <div class="value">90%</div>
+          <div class="desc">YoY Consumption Growth</div>
+        </div>
+        <div class="metric">
+          <div class="value">#1</div>
+          <div class="desc">SMB East Org MVP</div>
+        </div>
+      </div>
+
+      <h4>Progression</h4>
+      <div class="promotions">
+        <div class="promo-item">
+          <div class="promo-year">2018–21</div>
+          <div class="promo-detail"><strong>Field Account Manager, OD Prime</strong> — Attained 164% of FY21 midyear quota and grew territory consumption 90% YoY.</div>
+        </div>
+        <div class="promo-item">
+          <div class="promo-year">2017–18</div>
+          <div class="promo-detail"><strong>Business Development Consultant</strong> — Awarded FY18 Q4 SMB East Org MVP (#1 of 52) and Team MVP (#1 of 12).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="education-section" id="education">
+  <div class="section-header">
+    <span class="section-number" style="color:var(--gold)">02</span>
+    <h2 class="section-title">Education</h2>
+  </div>
+  <div class="edu-content">
+    <div>
+      <div class="edu-school">UMass Amherst</div>
+      <div class="edu-sub">Isenberg School of Management</div>
+      <div class="edu-details">
+        Bachelor of Business Administration in Marketing<br>
+        Minor: Psychology<br>
+        Graduated May 2017
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; justify-content:center;">
+      <div class="edu-gpa">
+        3.6 <span>Cumulative GPA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-tag">Get in Touch</div>
+  <h2 class="contact-heading">Let's <span class="italic">connect.</span></h2>
+  <div class="contact-links">
+    <a href="mailto:ccasey1009@gmail.com" class="contact-link">
+      <span class="cl-label">Email</span>
+      <span class="cl-value">ccasey1009@gmail.com</span>
+    </a>
+    <a href="tel:781-439-2102" class="contact-link">
+      <span class="cl-label">Phone</span>
+      <span class="cl-value">781-439-2102</span>
+    </a>
+    <a href="https://www.linkedin.com/in/carolinecasey12" target="_blank" class="contact-link">
+      <span class="cl-label">LinkedIn</span>
+      <span class="cl-value">carolinecasey12</span>
+    </a>
+    <span class="contact-link">
+      <span class="cl-label">Location</span>
+      <span class="cl-value">Melrose, MA 02176</span>
+    </span>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Caroline Casey
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.role-card').forEach(card => observer.observe(card));
+</script>
+
+</body>
+</html>
